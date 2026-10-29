@@ -1,0 +1,14 @@
+class Solution:
+    def leaders(self, arr):
+        # code here
+        leader = []
+        maxi = arr[-1]
+        leader.append(maxi)
+        
+        for i in range(len(arr) - 2, -1, -1):
+            if arr[i] >= maxi:
+                maxi = arr[i]
+                leader.append(arr[i])
+            
+        leader.reverse()
+        return leader
