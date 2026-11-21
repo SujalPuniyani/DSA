@@ -1,0 +1,36 @@
+class Solution:
+    def lowerbound(self, nums, target):
+        low, high = 0, len(nums) - 1
+        lb = len(nums)
+
+        while low <= high:
+            mid = (low + high) // 2
+            if nums[mid] >= target:
+                lb = mid
+                high = mid - 1
+            else:
+                low = mid + 1
+        return lb
+
+    def upperbound(self, nums, target):
+        low, high = 0, len(nums) - 1
+        ub = len(nums)
+
+        while low <= high:
+            mid = (low + high) // 2
+            if nums[mid] > target:
+                ub = mid
+                high = mid - 1
+            else:
+                low = mid + 1
+        return ub
+    def countFreq(self, arr, target):
+        # code here
+        lb = self.lowerbound(arr, target)
+        if lb == len(arr):
+            return 0
+        ub = self.upperbound(arr, target)
+        
+        return ub - lb
+        
+        
