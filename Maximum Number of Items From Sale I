@@ -1,0 +1,24 @@
+class Solution:
+    def maximumSaleItems(self, items, budget):
+        n = len(items)
+
+        # value of buying item i for the first time
+        v = []
+        for i in range(n):
+            f = items[i][0]
+            v.append(sum(1 for j in range(n) if items[j][0] % f == 0))
+
+        min_price = min(p for _, p in items)
+
+        # dp[b] = max copies using at most b budget (each item bought once)
+        dp = [0] * (budget + 1)
+        for i in range(n):
+            price = items[i][1]
+            for b in range(budget, price - 1, -1):
+                dp[b] = max(dp[b], dp[b - price] + v[i])
+
+        # spend the remainder on extra copies of the cheapest item
+        ans = 0
+        for b in range(budget + 1):
+            ans = max(ans, dp[b] + (budget - b) // min_price)
+        return ans
